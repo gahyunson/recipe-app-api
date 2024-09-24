@@ -1,7 +1,7 @@
 FROM python:3.9-alpine3.13
 LABEL maintainer="gahyunson.com"
 
-ENV PYTHONUNBUFFERED 1 # recommended running python in docker container.
+ENV PYTHONUNBUFFERED 1 
 
 COPY ./requirements.txt /tmp/requirements.txt  
 COPY ./requirements.dev.txt /tmp/requirements.dev.txt
@@ -22,6 +22,6 @@ RUN python -m venv /py && \
         --no-create-home \
         django-user 
 
-ENV PATH='/py/bin:$PATH'
+ENV PATH="/py/bin:$PATH"
 
 USER django-user
