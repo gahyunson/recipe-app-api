@@ -92,7 +92,7 @@ class PublicUserApiTests(TestCase):
 
         # check the response data includes a token
         self.assertIn('token', res.data)
-        self.assertEqual(res.status_code, status.HTTP_200_ok)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
 
     def test_create_token_bad_credentials(self):
         """Test returns error if crendentials invalid."""
