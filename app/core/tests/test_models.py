@@ -1,7 +1,7 @@
 """
 Tests for models.
 """
-from decimal import Decimal # storing a recipe object.
+from decimal import Decimal
 
 from django.test import TestCase
 from django.contrib.auth import get_user_model
@@ -69,7 +69,6 @@ class ModelTests(TestCase):
             'test@example.com',
             'testpass123',
         )
-        # create a recipe
         recipe = models.Recipe.objects.create(
             user=user,
             title='Smple recipe name',
