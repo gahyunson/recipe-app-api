@@ -10,7 +10,7 @@ from django.utils.translation import gettext as _
 from rest_framework import serializers
 
 
-class UserSerializer(serializers.ModelSerializer): # convert to model objects from input.
+class UserSerializer(serializers.ModelSerializer):
     """Serializer for the user object."""
 
     class Meta:
@@ -22,7 +22,7 @@ class UserSerializer(serializers.ModelSerializer): # convert to model objects fr
         """Create and return a user with encrypted password."""
         return get_user_model().objects.create_user(**validated_data)
 
-    def update(self, instance, validated_data): # Override
+    def update(self, instance, validated_data):
         """Update and return user."""
         password = validated_data.pop('password', None)
         user = super().update(instance, validated_data)
@@ -34,13 +34,13 @@ class UserSerializer(serializers.ModelSerializer): # convert to model objects fr
         return user
 
 
-# (Default) Basic serializer
+
 class AuthTokenSerializer(serializers.Serializer):
     """Serializer for the user auth token."""
     email = serializers.EmailField()
     password = serializers.CharField(
         style={'input_type': 'password'},
-        trim_whitespace=False, # User may deliberately have a space password
+        trim_whitespace=False,
     )
 
     def validate(self, attrs):

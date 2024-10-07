@@ -9,7 +9,6 @@ from rest_framework.test import APIClient
 from rest_framework import status
 
 
-# URL endpoint of the API, return full URL path
 CREATE_USER_URL = reverse('user:create')
 TOKEN_URL = reverse('user:token')
 ME_URL = reverse('user:me')
@@ -20,16 +19,12 @@ def create_user(**params):
     return get_user_model().objects.create_user(**params)
 
 
-# Public tests - Unauthenticated requests
-# registering a new user
-
 class PublicUserApiTests(TestCase):
     """Test the public features of the user API."""
 
     def setUp(self):
-        self.client = APIClient() # Create API and testing
+        self.client = APIClient()
 
-    # Test method
     def test_create_user_success(self):
         """Test creating a user is successful."""
         payload = {
@@ -37,7 +32,6 @@ class PublicUserApiTests(TestCase):
             'password': 'testpass123',
             'name': 'Test Name',
         }
-        # Post this data to the API
         res = self.client.post(CREATE_USER_URL, payload)
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
@@ -74,7 +68,7 @@ class PublicUserApiTests(TestCase):
 
     def test_create_token_for_user(self):
         """Test generates token for valid credentials."""
-        # Create user
+
         user_details = {
             'name': 'Test Name',
             'email': 'test@example.com',
@@ -82,16 +76,12 @@ class PublicUserApiTests(TestCase):
         }
         create_user(**user_details)
 
-        # Generate payload
-        # To send the token
         payload = {
             'email': user_details['email'],
             'password': user_details['password'],
         }
-        # post payload to the token url
         res = self.client.post(TOKEN_URL, payload)
 
-        # check the response data includes a token
         self.assertIn('token', res.data)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
@@ -107,7 +97,7 @@ class PublicUserApiTests(TestCase):
 
     def test_create_token_blank_password(self):
         """Test posting a blank password returns an error."""
-        payload = {'email':'test@example.com', 'password':''}
+        payload = {'email': 'test@example.com', 'password': ''}
         res = self.client.post(TOKEN_URL, payload)
 
         self.assertNotIn('token', res.data)
