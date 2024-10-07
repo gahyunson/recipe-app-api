@@ -25,8 +25,6 @@ def detail_url(recipe_id):
     return reverse('recipe:recipe-detail', args=[recipe_id])
 
 
-# helper function
-# **params is a dictionary and to not transform this values (that may have unintended consequences) create a new dictionary 'defaults'
 def create_recipe(user, **params):
     """Create and return a sample recipe."""
     defaults = {
@@ -65,10 +63,6 @@ class PrivateRecipeAPITests(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = create_user(email='user@example.com', password='test123')
-        # self.user = get_user_model().objects.create_user(
-        #     'user@example.com',
-        #     'testpass123',
-        # )
         self.client.force_authenticate(self.user)
 
     def test_retrieve_recipe(self):
@@ -130,13 +124,12 @@ class PrivateRecipeAPITests(TestCase):
             link=original_link,
         )
 
-        # just change only title.
         payload = {'title': 'New recipe title'}
         url = detail_url(recipe.id)
-        res = self.client.patch(url, payload) # posting
+        res = self.client.patch(url, payload)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        recipe.refresh_from_db() # refresh DB. Django doesn't automatically refresh from db.
+        recipe.refresh_from_db()
         self.assertEqual(recipe.title, payload['title'])
         self.assertEqual(recipe.link, original_link)
         self.assertEqual(recipe.user, self.user)
