@@ -25,7 +25,6 @@ def detail_url(tag_id):
     return reverse('recipe:tag-detail', args=[tag_id])
 
 
-
 def create_user(email='user@example.com', password='testpass123'):
     """Create and return a user."""
     return get_user_model().objects.create_user(email=email, password=password)
@@ -104,7 +103,7 @@ class PrivateTagsApiTests(TestCase):
         """Test listing tags to those assigned to recipes."""
         tag1 = Tag.objects.create(user=self.user, name='Breakfast')
         tag2 = Tag.objects.create(user=self.user, name='Lunch')
-        recipe =  Recipe.objects.create(
+        recipe = Recipe.objects.create(
             title='Green Eggs on Toast',
             time_minutes=10,
             price=Decimal('2.50'),
