@@ -111,13 +111,11 @@ class PrivateTagsApiTests(TestCase):
             user=self.user,
         )
         recipe.tags.add(tag1)
-        print('tag all 1', Tag.objects.all())
 
         res = self.client.get(TAGS_URL, {'assigned_only': 1})
 
         s1 = TagSerializer(tag1)
         s2 = TagSerializer(tag2)
-        print('tag all 2', Tag.objects.all())
         self.assertIn(s1.data, res.data)
         self.assertNotIn(s2.data, res.data)
 
